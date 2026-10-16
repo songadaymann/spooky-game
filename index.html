@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1612">
+  <title>Spooky</title>
+  <style>
+    :root {
+      --ink: #e2a3c0;
+      --ink-dim: rgba(226, 163, 192, 0.62);
+      --panel: rgba(10, 22, 18, 0.55);
+      color-scheme: dark;
+    }
+    html, body { margin: 0; height: 100%; background: #0a1612; overflow: hidden; }
+    body { font: 500 12px/1.45 ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+    #scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; }
+    .hud { position: fixed; pointer-events: none; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35); transition: opacity 0.4s; }
+    #who { left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom)); max-width: min(520px, calc(100vw - 32px)); }
+    #ghost-name { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 650; }
+    #ghost-traits { color: var(--ink-dim); margin-top: 2px; }
+    #hint { right: max(16px, env(safe-area-inset-right)); top: max(16px, env(safe-area-inset-top)); text-align: right; color: var(--ink-dim); letter-spacing: 0.02em; }
+    #hint b { color: var(--ink); font-weight: 650; }
+    #hint.used { opacity: 0.45; }
+    #buttons { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: flex; gap: 8px; }
+    #buttons button {
+      font: inherit; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink);
+      background: var(--panel); border: 1px solid rgba(226, 163, 192, 0.45); border-radius: 999px;
+      padding: 9px 14px; min-height: 40px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    }
+    #buttons button:active { background: rgba(226, 163, 192, 0.2); }
+    body.clean .hud, body.clean #buttons, body.clean .lil-gui { opacity: 0; pointer-events: none; }
+    .touch-only { display: none; }
+    @media (pointer: coarse) {
+      .touch-only { display: inline; }
+      .mouse-only { display: none; }
+    }
+    @media (max-width: 520px) {
+      #hint { font-size: 11px; }
+      #who { bottom: calc(max(16px, env(safe-area-inset-bottom)) + 52px); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="scene" aria-label="A ghost in a sheet, floating around a night-time country club"></canvas>
+  <div class="hud" id="who">
+    <div id="ghost-name">Ghost</div>
+    <div id="ghost-traits"></div>
+  </div>
+  <div class="hud" id="hint">
+    <span class="mouse-only"><b>WASD</b> or <b>click and hold</b> to float · <b>shift</b> dash<br><b>space</b> twirl · <b>N</b> next ghost · <b>R</b> random · <b>G</b> tuning · <b>H</b> hide</span>
+    <span class="touch-only"><b>touch and hold</b> to float · <b>pinch</b> to zoom</span>
+  </div>
+  <div id="buttons">
+    <button id="twirl" type="button">Twirl</button>
+    <button id="next" type="button">Next</button>
+    <button id="random" type="button">Random</button>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
